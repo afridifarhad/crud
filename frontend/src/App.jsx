@@ -46,6 +46,14 @@ function App() {
   }).catch(err => console.error(err))
 
 }
+ // Delete a user (DELETE)
+ const deleteUserById = (id) => {
+  axios.delete(`${API_URL}/${id}`)
+    .then(() => {
+      setUsers(users.filter(user => user.id !== id));
+    })
+    .catch(err => console.error(err));
+};
 
 
   return (
@@ -73,6 +81,17 @@ function App() {
         </div>
       )}
    
+   <ul>
+        {users.map(user => (
+          <li key={user.id}>
+            {user.name}
+            <button onClick={() => setUpdateUser({ id: user.id, name: user.name })}>
+              Edit
+            </button>
+            <button onClick={() => deleteUserById(user.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
    </>
   )
 }
